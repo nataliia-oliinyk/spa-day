@@ -1,0 +1,35 @@
+eureka:
+  client:
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://discovery-service:8061/eureka/
+  instance:
+    hostname: user-service
+      
+logging:
+  pattern: 
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%X{traceId:-},%X{spanId:-}] ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
+springdoc:
+  packagesToScan: base.service.user
+
+spring:
+  data:
+    mongodb:
+      host: mongo_db
+      port: 27017
+      database: test
+  output:
+    ansi:
+      enabled: always
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+jwt:
+  secretKey: 8Q54nmxVQMp4ILbZyVFciGXm994uEkJIMCdGXDVqjJsS5qGwBJPDdVuL8Pqkwa
+
+sharing_data:
+  url_appointment: http://${appointment.service.host:localhost}:${appointment.service.port:8080}

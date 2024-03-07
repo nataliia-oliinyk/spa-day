@@ -1,0 +1,9 @@
+.passed {
+    color: green;
+}
+
+.passed:before {
+    content: "✔";
+    display: inline-block;
+    margin-right: 0.4em;
+}

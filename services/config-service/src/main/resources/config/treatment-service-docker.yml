@@ -1,0 +1,31 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone:  http://discovery-service:8061/eureka/
+  instance:
+    hostname: treatment-service
+      
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%X{traceId:-},%X{spanId:-}] ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
+springdoc:
+  packagesToScan: base.service.treatment
+
+spring:
+  data:
+    mongodb:
+      host: mongo_db
+      port: 27017
+      database: test
+  output:
+    ansi:
+      enabled: always
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+upload:
+  imageDir: ./images/

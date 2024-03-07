@@ -1,0 +1,38 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8061/eureka/
+  instance:
+    hostname: appointment-service
+      
+logging:
+  pattern: 
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%X{traceId:-},%X{spanId:-}] ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
+springdoc:
+  packagesToScan: base.service.appointment
+
+spring:
+  data:
+    mongodb:
+      host: mongo_db
+      port: 27017
+      database: test
+  output:
+    ansi:
+      enabled: always
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+appointments:
+  max_per_month: 10
+
+sharing_data:
+  url_employee: http://${employee.service.host:localhost}:${employee.service.port:8080}
+  url_treatment: http://${treatment.service.host:localhost}:${treatment.service.port:8080}
+
+
+
