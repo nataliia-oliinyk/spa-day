@@ -50,7 +50,7 @@ class TreatmentsControllerTest {
 
     @Test
     void testAddNew() throws Exception {
-        Treatment treatment = new Treatment("treatment1", "treatment desc", null, 10);
+        Treatment treatment = new Treatment(null, "treatment1", "treatment desc", null, 10);
         when(treatmentService.save(any(Treatment.class))).thenReturn(treatment);
         mockMvc.perform(post("/")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -61,20 +61,20 @@ class TreatmentsControllerTest {
 
         mockMvc.perform(post("/")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(objectMapper.writeValueAsString(new Treatment(null, null, null, 10))))
+                        .content(objectMapper.writeValueAsString(new Treatment(null, null, null, null, 10))))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors").value("The name is required."));
 
         mockMvc.perform(post("/")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(objectMapper.writeValueAsString(new Treatment("test", null, null, 0))))
+                        .content(objectMapper.writeValueAsString(new Treatment(null, "test", null, null, 0))))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors").value("The duration must be greater than 0."));
     }
 
     @Test
     void testGetByName() throws Exception {
-        Treatment treatment = new Treatment("treatment1", "treatment desc", null, 10);
+        Treatment treatment = new Treatment(null, "treatment1", "treatment desc", null, 10);
         when(treatmentService.getByName(anyString())).thenReturn(treatment);
         mockMvc.perform(get("/{name}", "treatment1").contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -88,7 +88,7 @@ class TreatmentsControllerTest {
 
     @Test
     void testUpdate() throws Exception {
-        Treatment treatment = new Treatment("treatment1", "treatment desc", null, 10);
+        Treatment treatment = new Treatment(null, "treatment1", "treatment desc", null, 10);
         when(treatmentService.update(anyString(), any(Treatment.class))).thenReturn(treatment);
 
         mockMvc.perform(put("/{name}", "treatment1")
@@ -98,20 +98,20 @@ class TreatmentsControllerTest {
 
         mockMvc.perform(put("/{name}", "treatment1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(objectMapper.writeValueAsString(new Treatment(null, null, null, 0))))
+                        .content(objectMapper.writeValueAsString(new Treatment(null, null, null, null, 0))))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors").value(containsInAnyOrder("The duration must be greater than 0.","The name is required.")));;
 
         mockMvc.perform(put("/{name}", "treatment1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(objectMapper.writeValueAsString(new Treatment("test", null, null, 0))))
+                        .content(objectMapper.writeValueAsString(new Treatment(null, "test", null, null, 0))))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors").value("The duration must be greater than 0."));
     }
 
     @Test
     void addPhoto() throws Exception {
-        when(treatmentService.addImage(anyString(), any(ImageRequest.class))).thenReturn(new Treatment("treatment1", "treatment desc", null, 10));
+        when(treatmentService.addImage(anyString(), any(ImageRequest.class))).thenReturn(new Treatment(null, "treatment1", "treatment desc", null, 10));
         mockMvc.perform(post("/{name}/upload", "treatment1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(new ImageRequest("new-image"))))

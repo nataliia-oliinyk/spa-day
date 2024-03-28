@@ -21,7 +21,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAll() {
-        System.out.println(employeeUrl);
         return webClient.build()
                 .get()
                 .uri(employeeUrl + "/")

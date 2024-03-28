@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "appointment-service", url = "${sharing_data.url_appointment}")
+@FeignClient(name = "appointment-service")
 public interface AppointmentClient {
 
     @PostMapping("/{appointment_id}")

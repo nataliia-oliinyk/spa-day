@@ -20,7 +20,6 @@ public class TreatmentServiceImpl implements TreatmentService {
 
     @Override
     public List<Treatment> getAll() {
-        System.out.println(treatmentUrl);
         return webClient.build()
                 .get()
                 .uri(treatmentUrl + "/")

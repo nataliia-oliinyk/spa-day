@@ -24,11 +24,13 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticateUser(@Valid @RequestBody AuthenticationRequest request)  {
+    	LOGGER.info(request.toString());
         return new ResponseEntity<>(authService.authenticate(request), HttpStatus.OK);
     }
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> registerUser(@Valid @RequestBody RegisterRequest request) throws UserExistsException {
-        return new ResponseEntity<>(authService.register(request), HttpStatus.CREATED);
+    	LOGGER.info(request.toString());
+    	return new ResponseEntity<>(authService.register(request), HttpStatus.CREATED);
     }
 }

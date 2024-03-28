@@ -1,8 +1,14 @@
+FROM maven:3.9.6-eclipse-temurin-21-jammy as builder
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline
+COPY src/ ./src/
+RUN mvn clean package -DskipTests=true
+
 FROM eclipse-temurin:21-jammy
-ENV APP_FILE user-service.jar
-ENV APP_HOME /usr/apps
-COPY target/*.jar $APP_HOME/$APP_FILE
-COPY images/ $APP_HOME/images/
-WORKDIR $APP_HOME
-ENTRYPOINT ["sh", "-c"]
-CMD ["exec java -jar $APP_FILE"]
+RUN mkdir /app
+COPY --from=builder /app/target/*.jar /app/app.jar
+COPY images/ app/images/
+WORKDIR /app
+EXPOSE 8002
+ENTRYPOINT ["java","-jar","/app/app.jar"]

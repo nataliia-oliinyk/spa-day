@@ -1,15 +1,11 @@
 package base.service.user.dto;
 
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class RegisterRequest {
     @NotEmpty(message = "Invalid Name: empty name")
     @Size(min = 2, max = 100, message = "Invalid Name: must be between 2 and 100 characters.")

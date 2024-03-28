@@ -1,8 +1,13 @@
+FROM maven:3.9.6-eclipse-temurin-21-jammy as builder
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline
+COPY src/ ./src/
+RUN mvn clean package -DskipTests=true
+
 FROM eclipse-temurin:21-jammy
-ENV APP_FILE discovery-service.jar
-ENV APP_HOME /usr/apps
+RUN mkdir /app
+COPY --from=builder /app/target/*.jar /app/app.jar
+WORKDIR /app
 EXPOSE 8061
-COPY target/*.jar $APP_HOME/$APP_FILE
-WORKDIR $APP_HOME
-ENTRYPOINT ["sh", "-c"]
-CMD ["exec java -jar $APP_FILE"]
+ENTRYPOINT ["java","-jar","/app/app.jar"]

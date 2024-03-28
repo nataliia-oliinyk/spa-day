@@ -1,0 +1,6 @@
+services:
+  frontend:
+    build: .
+    image: webclient/frontend:1
+    ports:
+      - "4000:80"
